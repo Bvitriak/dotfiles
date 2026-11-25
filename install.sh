@@ -3,7 +3,23 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "Installing dotfiles from $DOTFILES_DIR..."
+detect_os() {
+  case "$(uname -s)" in
+    Darwin*)               echo "macos" ;;
+    Linux*)
+      if grep -qi microsoft /proc/version 2>/dev/null; then
+        echo "wsl"
+      else
+        echo "linux"
+      fi
+      ;;
+    CYGWIN*|MINGW*|MSYS*)  echo "windows" ;;
+    *)                     echo "unknown" ;;
+  esac
+}
+
+OS="$(detect_os)"
+echo "Installing dotfiles from $DOTFILES_DIR (detected OS: $OS)..."
 
 link_file() {
   local src="$1"
@@ -27,4 +43,4 @@ else
   link_file "$DOTFILES_DIR/shell/.bashrc" "$HOME/.bashrc"
 fi
 
-echo "Dotfiles installation complete."
+echo "Dotfiles installation complete for $OS."

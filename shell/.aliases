@@ -1,3 +1,32 @@
+# OS-specific helpers
+case "$(uname -s)" in
+  Darwin*)
+    alias ls="ls -G"
+    alias copy="pbcopy"
+    alias paste="pbpaste"
+    alias openurl="open"
+    ;;
+  Linux*)
+    alias ls="ls --color=auto"
+    if grep -qi microsoft /proc/version 2>/dev/null; then
+      alias copy="clip.exe"
+      alias openurl="explorer.exe"
+    elif command -v xclip >/dev/null 2>&1; then
+      alias copy="xclip -selection clipboard"
+      alias paste="xclip -selection clipboard -o"
+    elif command -v wl-copy >/dev/null 2>&1; then
+      alias copy="wl-copy"
+      alias paste="wl-paste"
+    fi
+    command -v xdg-open >/dev/null 2>&1 && alias openurl="xdg-open"
+    ;;
+  CYGWIN*|MINGW*|MSYS*)
+    alias ls="ls --color=auto"
+    alias copy="clip"
+    alias openurl="start"
+    ;;
+esac
+
 # Navigation
 alias ..="cd .."
 alias ...="cd ../.."
@@ -16,16 +45,20 @@ alias gl="git lg"
 alias gd="git diff"
 alias gco="git switch"
 
-# Node / pnpm / Vite
-alias pn="pnpm"
-alias pni="pnpm install"
-alias pnd="pnpm dev"
-alias pnb="pnpm build"
-alias pnt="pnpm test"
-alias pnl="pnpm lint"
+# Node / pnpm (only bind if installed)
+if command -v pnpm >/dev/null 2>&1; then
+  alias pn="pnpm"
+  alias pni="pnpm install"
+  alias pnd="pnpm dev"
+  alias pnb="pnpm build"
+  alias pnt="pnpm test"
+  alias pnl="pnpm lint"
+fi
 
-# Docker
-alias dc="docker compose"
-alias dcu="docker compose up -d"
-alias dcd="docker compose down"
-alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+# Docker (only bind if installed)
+if command -v docker >/dev/null 2>&1; then
+  alias dc="docker compose"
+  alias dcu="docker compose up -d"
+  alias dcd="docker compose down"
+  alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+fi
