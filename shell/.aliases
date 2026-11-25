@@ -1,0 +1,31 @@
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ll="ls -lah"
+
+# Git
+alias g="git"
+alias gs="git st"
+alias ga="git add"
+alias gaa="git add --all"
+alias gc="git cm"
+alias gca="git ca"
+alias gp="git push"
+alias gpl="git pull"
+alias gl="git lg"
+alias gd="git diff"
+alias gco="git switch"
+
+# Node / pnpm / Vite
+alias pn="pnpm"
+alias pni="pnpm install"
+alias pnd="pnpm dev"
+alias pnb="pnpm build"
+alias pnt="pnpm test"
+alias pnl="pnpm lint"
+
+# Docker
+alias dc="docker compose"
+alias dcu="docker compose up -d"
+alias dcd="docker compose down"
+alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"

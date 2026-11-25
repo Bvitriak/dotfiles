@@ -1,0 +1,17 @@
+# Local editor and OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Local overrides and logs
+*.local
+*.log
